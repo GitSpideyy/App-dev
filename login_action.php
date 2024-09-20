@@ -1,0 +1,41 @@
+<?php
+include "connect.php";
+
+try {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Prepare SQL statement to get user data including hashed password
+    $stmt = $conn->prepare("SELECT
+                                u.userid,
+                                r.roleid,
+                                r.description,
+                                u.fullname,
+                                u.username,
+                                u.password AS hashed_password
+                            FROM 
+                                `user` u 
+                                LEFT OUTER JOIN role r ON u.roleid = r.roleid
+                            WHERE 
+                                u.username = :username");
+
+    $stmt->bindParam(':username', $username);
+
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Verify the provided password against the hashed password
+            if (password_verify($password, $user['hashed_password'])) {
+                echo json_encode(array("response" => "success", "message" => "Successfully Logged In"));
+            } else {
+                echo json_encode(array("response" => "error", "message" => "Invalid username or password"));
+            }
+        } else {
+            echo json_encode(array("response" => "error", "message" => "Invalid username or password"));
+        }
+    }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
