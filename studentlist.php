@@ -189,13 +189,14 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            include "connect.php";
                                             try {
                                                 // Establish database connection
                                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                                 // Fetch records from the database
-                                                $stmt = $conn->prepare("SELECT * FROM student"); // Replace 'student' with your table name
+                                                $stmt = $conn->prepare("SELECT * FROM student"); 
                                                 $stmt->execute();
 
                                                 if ($stmt->rowCount() > 0) {
@@ -273,27 +274,37 @@
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <script>
-        function deleteStudent(studentno) {
-          
-                $.ajax({
-                    type: "POST",
-                    url: 'studentlistdelete.php',
-                    data: { studentno: studentno },
-                    success: function (data) {
-                        const obj = JSON.parse(data);
-                        if (obj.response === 'success') {
-                            toastr.success(obj.message);
-                            location.reload(); // Reload the page to reflect changes
-                        } else {
-                            toastr.error(obj.message);
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        toastr.error("An error occurred. Please try again.");
+    function deleteStudent(studentno) {
+        $.ajax({
+            type: "POST",
+            url: 'studentlistdelete.php',
+            data: { studentno: studentno },
+            success: function (data) {
+                console.log("Response from server: ", data); // Log the response to check if data is received
+                try {
+                    const obj = JSON.parse(data);
+                    if (obj.response === 'success') {
+                        toastr.success(obj.message);
+
+                        // Delay the reload by 3 seconds (3000 milliseconds)
+                        setTimeout(function() {
+                            location.reload(); // Reload the page after the delay
+                        }, 1500);
+                    } else {
+                        toastr.error(obj.message);
                     }
-                });
+                } catch (e) {
+                    console.error("Error parsing JSON: ", e);
+                    toastr.error("An error occurred while processing the response.");
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error("An error occurred. Please try again.");
             }
-    </script>
+        });
+    }
+</script>
+
 
     <script>
         $(function () {
