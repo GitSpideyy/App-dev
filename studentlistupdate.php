@@ -297,7 +297,7 @@
                                 ?>
 
                                 <div class="container">
-                                  
+
                                     <form id="updateForm" onsubmit="return validateForm()">
                                         <div class="form-group">
                                             <label for="studentno">Student ID</label>
@@ -349,7 +349,7 @@
                             </div>
                             <!-- /.card-body -->
 
-                           
+
                             </form>
                         </div>
                         <!-- /.card -->
@@ -416,7 +416,7 @@
             var middlename = document.getElementById("middlename").value;
             var lastname = document.getElementById("lastname").value;
             var contact = document.getElementById("contact").value;
-            var email = document.getElementById("email").value; 
+            var email = document.getElementById("email").value;
             var birthdate = document.getElementById("birthdate").value;
 
             $.ajax({
@@ -435,6 +435,9 @@
                     const obj = JSON.parse(data);
                     if (obj.response == 'success') {
                         toastr.success(obj.message);
+                        window.setTimeout(function () {
+                            window.location.href = "studentlist.php";
+                        }, 1000);
                     } else {
                         toastr.error(obj.message);
                     }

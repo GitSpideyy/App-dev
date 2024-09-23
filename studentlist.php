@@ -289,7 +289,7 @@
                         // Delay the reload by 3 seconds (3000 milliseconds)
                         setTimeout(function() {
                             location.reload(); // Reload the page after the delay
-                        }, 1500);
+                        }, 1000);
                     } else {
                         toastr.error(obj.message);
                     }
