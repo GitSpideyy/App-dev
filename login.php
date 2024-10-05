@@ -18,13 +18,12 @@
 
 <body class="hold-transition login-page">
   <div class="login-box">
-    <div class="login-logo">
-      <a href="index2.html"><b>Task Management System</b></a>
-    </div>
+  
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Log in to start your session   </p>
+        <p class="login-box-msg" style="font-size: 28px; color: #000000;">Task Management System</p>
+        <p class="login-box-msg" style="color: #666666; font-size: 15px;">sign in to start your session</p>
 
         <form action="../../index3.html" method="post">
           <div class="input-group mb-3">
@@ -57,6 +56,14 @@
         </form>
 
       </div>
+      <style>
+        body {
+          background-image: url('dist/img/background_img.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      </style></style>
       <!-- /.login-card-body -->
     </div>
   </div>
