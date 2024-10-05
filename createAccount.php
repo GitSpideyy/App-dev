@@ -21,7 +21,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="index2.html" class="h1">Student Registration</a>
+                <a href="index2.html" class="h1">Account Registration</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Register to start your session</p>
@@ -52,13 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <select type="text" class="form-control" placeholder="Role" id="roleid" name="role">
-                            <option value="Student">Student</option>
-                            <option value="Faculty">Faculty</option>
-                            <option value="User">User</option>
-                        </select>
-                    </div>
+                   
                     <div class="row">
                         <div class="col-4">
                             <button type="button" class="btn btn-primary btn-block"
@@ -94,16 +88,17 @@
             var FullName = document.getElementById("fullname").value;
             var UserName = document.getElementById("username").value;
             var Password = document.getElementById("password").value;
-            var Role = document.getElementById("roleid").value;
+            
+           
 
             $.ajax({
                 type: "POST",
-                url: 'signup_action.php',
+                url: 'createAccount_action.php',
                 data: {
                     FullName: FullName,
                     UserName: UserName,
                     Password: Password,
-                    Role: Role
+                 
                 },
                 success: function (data) {
                     const obj = JSON.parse(data);

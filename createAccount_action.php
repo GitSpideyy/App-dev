@@ -5,15 +5,13 @@ include "connect.php";
 try {
 
     // Check if POST variables are set
-    if (isset($_POST["FullName"]) && isset($_POST["UserName"]) && isset($_POST["Password"]) && isset($_POST["Role"])) {
+    if (isset($_POST["FullName"]) && isset($_POST["UserName"]) && isset($_POST["Password"])) {
 
         // Get POST data
         $FullName = $_POST["FullName"];
         $UserName = $_POST["UserName"];
         $Password = $_POST["Password"];
-        $Role = $_POST["Role"];
-
-
+       
 
         // Function to check if a username or fullname already exists
         function userExists($conn, $FullName, $UserName)
@@ -34,23 +32,15 @@ try {
             $hashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 
 
-            // Convert role into roleid
-            if ($Role == "Student") {
-                $Roleid = 1;
-            } else if ($Role == "Faculty") {
-                $Roleid = 2;
-            } else {
-                $Roleid = 3;
-            }
+          
             // Prepare SQL statement with placeholders
-            $stmt = $conn->prepare("INSERT INTO `user` (fullname, username, password, roleid) VALUES (:FullName, :UserName, :Password, :Roleid)");
+            $stmt = $conn->prepare("INSERT INTO `user` (fullname, username, password) VALUES (:FullName, :UserName, :Password)");
 
             // Bind parameters
             $stmt->bindParam(':FullName', $FullName);
             $stmt->bindParam(':UserName', $UserName);
             $stmt->bindParam(':Password', $hashedPassword);
-            $stmt->bindParam(':Roleid', $Roleid);
-
+           
 
             // Execute the statement
             if ($stmt->execute()) {

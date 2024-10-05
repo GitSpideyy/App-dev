@@ -7,17 +7,14 @@ try {
 
     // Prepare SQL statement to get user data including hashed password
     $stmt = $conn->prepare("SELECT
-                                u.userid,
-                                r.roleid,
-                                r.description,
-                                u.fullname,
-                                u.username,
-                                u.password AS hashed_password
+                                userid,
+                                fullname,
+                                username,
+                                password AS hashed_password
                             FROM 
-                                `user` u 
-                                LEFT OUTER JOIN role r ON u.roleid = r.roleid
+                                `user` 
                             WHERE 
-                                u.username = :username");
+                                username = :username");
 
     $stmt->bindParam(':username', $username);
 
