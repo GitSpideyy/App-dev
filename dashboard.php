@@ -148,6 +148,23 @@
                                
                             </ul>
                         </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>
+                                    Task
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="addTask.php" class="nav-link">                                      
+                                        <p> Add Task</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
                     
                         <li class="nav-item">
                             <a href="login.php" class="nav-link">
