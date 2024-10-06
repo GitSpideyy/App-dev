@@ -167,7 +167,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Add a Person</h1>
+                            <h1 class="m-0">Add a Project</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                            
@@ -193,24 +193,21 @@
                                 <form id="login" onsubmit="return validateForm()">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="First Name">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required autocomplete="off">
+                                            <label for="Project Name">Project Name</label>
+                                            <input type="text" class="form-control" id="project_name" placeholder="Enter Project Name" required autocomplete="off">
                                         </div>
                                         <div class="form-group">
-                                            <label for="Middle Name">Middle Name</label>
-                                            <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name" required autocomplete="off">
+                                            <label for="Creation Date">Creation Date</label>
+                                            <input type="date" class="form-control" id="project_created" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Project Start ">Project start </label>
+                                            <input type="date" class="form-control" id="start_date" placeholder="Enter Project Start " required autocomplete="off">
                                         </div>
                                         <div class="form-group">
-                                            <label for="Last Name">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contact">Contact</label>
-                                            <input type="text" class="form-control" id="contact" placeholder="Enter Contact Number" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" placeholder="Enter Email" required autocomplete="off">
+                                            <label for="Project End">Project End</label>
+                                            <input type="date" class="form-control" id="end_date" placeholder="Enter Project End"  required autocomplete="off">
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -282,21 +279,21 @@
         }
 
         function SaveRecord() {
-            var firstname = document.getElementById("firstName").value;
-            var middlename = document.getElementById("middleName").value;
-            var lastname = document.getElementById("lastName").value;
-            var contact = document.getElementById("contact").value;
-            var email = document.getElementById("email").value;
+            var project_name = document.getElementById("project_name").value;
+            var project_created = document.getElementById("project_created").value;
+            var start_date = document.getElementById("start_date").value;
+            var end_date = document.getElementById("end_date").value;
+           
+        
 
             $.ajax({
                 type: "POST",
-                url: 'addPerson_action.php',
+                url: 'addProject_action.php',
                 data: {
-                    firstname: firstname,
-                    middlename: middlename,
-                    lastname: lastname,
-                    contact: contact,
-                    email: email
+                    project_name: project_name,
+                    project_created: project_created,
+                    start_date: start_date,
+                    end_date: end_date,
                 },
                 success: function (data) {
                     const obj = JSON.parse(data);

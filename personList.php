@@ -130,7 +130,28 @@
                                
                             </ul>
                         </li>
-
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-project-diagram"></i>
+                                <p>
+                                    Project
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="addProject.php" class="nav-link">                                      
+                                        <p> Add Project</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="projectList.php" class="nav-link">                                      
+                                        <p> Project List</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a href="login.php" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i>
@@ -156,12 +177,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">Person List</h1>
                         </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v2</li>
-                            </ol>
-                        </div><!-- /.col -->
+                        
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -212,7 +228,7 @@
                                                         echo "<td>" . htmlspecialchars($obj["contact"]) . "</td>";
                                                         echo "<td>" . htmlspecialchars($obj["email"]) . "</td>";
                                                         echo "<td>
-                                               <button class='btn btn-danger btn-sm' onclick='deleteStudent(\"" . htmlspecialchars($obj["person_id"]) . "\")'>Delete</button>
+                                               <button class='btn btn-danger btn-sm' onclick='deletePerson(\"" . htmlspecialchars($obj["person_id"]) . "\")'>Delete</button>
                                                <a href='personListUpdate.php?person_id=" . htmlspecialchars($obj["person_id"]) . "' class='btn btn-primary btn-sm'>Update</a>
                                                               </td>";
 
@@ -290,7 +306,7 @@
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <script>
-            function deleteStudent(person_id) {
+            function deletePerson(person_id) {
                 $.ajax({
                     type: "POST",
                     url: 'personListDelete_action.php',
