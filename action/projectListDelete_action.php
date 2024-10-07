@@ -1,5 +1,5 @@
 <?php
-include "connect.php";
+include "../connect.php";
 
 try {
     // Check if project_id is set

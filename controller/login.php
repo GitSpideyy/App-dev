@@ -7,13 +7,13 @@
   <title>AdminLTE 3 | Log in</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Toastr -->
-  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -58,7 +58,7 @@
       </div>
       <style>
         body {
-          background-image: url('dist/img/background_img.jpg');
+          background-image: url('../dist/img/background_img.jpg');
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
@@ -70,13 +70,13 @@
   <!-- /.login-box -->
 
   <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
+  <script src="../dist/js/adminlte.min.js"></script>
   <!-- Toastr -->
-  <script src="plugins/toastr/toastr.min.js"></script>
+  <script src="../plugins/toastr/toastr.min.js"></script>
   
   <script>
     function Login() {
@@ -84,7 +84,7 @@
       var password = document.getElementById("password").value;
       $.ajax({
         type: "POST",
-        url: 'login_action.php',
+        url: '../action/login_action.php',
         data: {
           username: username,
           password: password
@@ -94,7 +94,7 @@
           if (obj.response == 'success') {
             toastr.success(obj.message);
             window.setTimeout(function () {
-              window.location.href = "dashboard.php";
+              window.location.href = "../controller/dashboard.php";
             }, 1200);
           } else {
             toastr.error(obj.message);

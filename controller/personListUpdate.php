@@ -8,13 +8,13 @@
 
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- Toastr -->
-    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -73,75 +73,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-               
-                <span class="brand-text font-weight-light">Task Management System</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-            
-               
-
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    Person
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="personList.php" class="nav-link">                                      
-                                        <p>Person List </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="addPerson.php" class="nav-link">                                      
-                                        <p> Add Person</p>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                        </li>
-                    
-                        <li class="nav-item">
-                            <a href="login.php" class="nav-link">
-                            <i class="fas fa-sign-out-alt"></i>
-                                <p>
-                                  Logout
-                                </p>
-                            </a>
-                        </li>
-                        
-                    </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
-        </aside>
+        <?php include '../sidebar.php'; ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -178,10 +110,7 @@
 
                                 <!-- form start -->
                                 <?php
-                                $servername = "localhost"; 
-                                $dbname = "taskmanagementsystem"; 
-                                $username = "root"; 
-                                $password = ""; 
+                                include '../connect.php';
                                 try {
                                     // Establish database connection
                                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -201,7 +130,7 @@
 
                                 // Check if student data exists
                                 if (!$person_id) {
-                                    echo "No student found.";
+                                    echo "No Person found.";
                                     exit;
                                 }
                                 ?>
@@ -280,24 +209,24 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.js"></script>
+    <script src="../dist/js/adminlte.js"></script>
       <!-- Toastr -->
-      <script src="plugins/toastr/toastr.min.js"></script>
+      <script src="../plugins/toastr/toastr.min.js"></script>
 
-    <!-- PAGE PLUGINS -->
+    <!-- PAGE ../PLUGINS -->
     <!-- jQuery Mapael -->
-    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="../plugins/raphael/raphael.min.js"></script>
+    <script src="../plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="../plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <!-- ChartJS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
+    <script src="../plugins/chart.js/Chart.min.js"></script>
 
    <script>
         function validateForm() {
@@ -325,7 +254,7 @@
 
             $.ajax({
                 type: "POST",
-                url: 'personListUpdate_action.php',
+                url: '../action/personListUpdate_action.php',
                 data: {
                     person_id: person_id,
                     firstname: firstname,
@@ -340,7 +269,7 @@
                     if (obj.response == 'success') {
                         toastr.success(obj.message);
                         window.setTimeout(function () {
-                            window.location.href = "personList.php";
+                            window.location.href = "../controller/personList.php";
                         }, 1000);
                     } else {
                         toastr.error(obj.message);

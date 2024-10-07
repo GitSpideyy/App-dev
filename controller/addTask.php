@@ -7,13 +7,13 @@
     <title>TaskManagement | System </title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- Toastr -->
-    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -69,110 +69,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <span class="brand-text font-weight-light">Task Management System</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    Person
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="personList.php" class="nav-link">                                      
-                                        <p>Person List </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="addPerson.php" class="nav-link">                                      
-                                        <p> Add Person</p>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                        </li>
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-project-diagram"></i>
-                                <p>
-                                    Project
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="addProject.php" class="nav-link">                                      
-                                        <p> Add Project</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="projectList.php" class="nav-link">                                      
-                                        <p> Project List</p>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                        </li>
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tasks"></i>
-                                <p>
-                                    Task
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="addTask.php" class="nav-link">                                      
-                                        <p> Add Task</p>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                        </li>
-                    
-                        <li class="nav-item">
-                            <a href="login.php" class="nav-link">
-                            <i class="fas fa-sign-out-alt"></i>
-                                <p>
-                                  Logout
-                                </p>
-                            </a>
-                        </li>
-                        
-                    </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
-        </aside>
+        <?php include '../sidebar.php'; ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -181,7 +78,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard v2</h1>
+                            <h1 class="m-0">Add Task</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -209,10 +106,7 @@
 
                                 <!-- form start -->
                                 <?php
-                                $servername = "localhost";
-                                $dbname = "taskmanagementsystem";
-                                $username = "root";
-                                $password = "";
+                                include '../connect.php';
                                 try {
                                     // Establish database connection
                                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -265,6 +159,17 @@
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="Creation Date">Creation Date</label>
+                                            <input type="date" class="form-control" id="task_created" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Project Due Date ">Task Due Date </label>
+                                            <input type="date" class="form-control" id="due_date" placeholder="Enter Task Due Date " required autocomplete="off">
+                                        </div>
+                                        
 
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-primary btn-block">Save Task</button>
@@ -303,15 +208,15 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.js"></script>
+    <script src="../dist/js/adminlte.js"></script>
     <!-- Toastr -->
-    <script src="plugins/toastr/toastr.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
 
     <script>
         function validateForm() {
@@ -333,30 +238,38 @@
             var task_name = document.getElementById("task_name").value;
             var person_id = document.getElementById("person_id").value;
             var project_id = document.getElementById("project_id").value;
+            var task_created = document.getElementById("task_created").value;
+            var due_date = document.getElementById("due_date").value;
 
             $.ajax({
                 type: "POST",
-                url: 'addTask_action.php',
+                url: '../action/addTask_action.php',
                 data: {
                     task_name: task_name,
                     person_id: person_id,
-                    project_id: project_id
+                    project_id: project_id,
+                    task_created: task_created,
+                    due_date: due_date
                 },
                 success: function (data) {
-                    const obj = JSON.parse(data);
-                    if (obj.response == 'success') {
-                        toastr.success(obj.message);
-                        window.setTimeout(function () {
-                            window.location.href = "taskList.php";
-                        }, 1000);
-                    } else {
-                        toastr.error(obj.message);
+                    try {
+                        const obj = JSON.parse(data);
+                        if (obj.response === 'success') {
+                            toastr.success(obj.message);
+                            window.setTimeout(function () {
+                                window.location.href = "../controller/taskList.php";
+                            }, 1000);
+                        } else {
+                            toastr.error(obj.message);
+                        }
+                    } catch (e) {
+                        toastr.error("Failed to parse response: " + e.message);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("An error occurred. Please try again.");
                 }
-            })
+            });
         }
     </script>
 </body>
