@@ -23,54 +23,7 @@
         <!-- Preloader -->
        
 
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
+        
 
         <!-- Main Sidebar Container -->
         <?php include '../sidebar.php'; ?>
@@ -116,20 +69,20 @@
                                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    $person_id = isset($_GET['person_id']) ? $_GET['person_id'] : null;
+                                    $staff_id = isset($_GET['staff_id']) ? $_GET['staff_id'] : null;
                                     // Fetch student record based on studentno
-                                    $stmt = $conn->prepare("SELECT * FROM person WHERE person_id = :person_id");
-                                    $stmt->bindParam(':person_id', $person_id);
+                                    $stmt = $conn->prepare("SELECT * FROM staff WHERE staff_id = :staff_id");
+                                    $stmt->bindParam(':staff_id', $staff_id);
                                     $stmt->execute();
 
-                                    $person_id = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    $staff_id = $stmt->fetch(PDO::FETCH_ASSOC);
                                 } catch (PDOException $e) {
                                     echo "Connection failed: " . htmlspecialchars($e->getMessage());
                                     exit;
                                 }
 
                                 // Check if student data exists
-                                if (!$person_id) {
+                                if (!$staff_id) {
                                     echo "No Person found.";
                                     exit;
                                 }
@@ -139,39 +92,39 @@
                                     <form id="updateForm" onsubmit="return validateForm()">
 
                                         <div class="form-group">
-                                            <label for="person_id">Person ID</label>
-                                            <input type="text" class="form-control" id="person_id"
-                                                value="<?php echo htmlspecialchars($person_id['person_id']); ?>"
+                                            <label for="staff_id">Person ID</label>
+                                            <input type="text" class="form-control" id="staff_id"
+                                                value="<?php echo htmlspecialchars($staff_id['staff_id']); ?>"
                                                 placeholder="Enter Person ID" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="firstname">First Name</label>
                                             <input type="text" class="form-control" id="firstname"
-                                                value="<?php echo htmlspecialchars($person_id['firstname']); ?>"
+                                                value="<?php echo htmlspecialchars($staff_id['firstname']); ?>"
                                                 placeholder="Enter First Name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="middlename">Middle Name</label>
                                             <input type="text" class="form-control" id="middlename"
-                                                value="<?php echo htmlspecialchars($person_id['middlename']); ?>"
+                                                value="<?php echo htmlspecialchars($staff_id['middlename']); ?>"
                                                 placeholder="Enter Middle Name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="lastname">Last Name</label>
                                             <input type="text" class="form-control" id="lastname"
-                                                value="<?php echo htmlspecialchars($person_id['lastname']); ?>"
+                                                value="<?php echo htmlspecialchars($staff_id['lastname']); ?>"
                                                 placeholder="Enter Last Name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="contact">Contact</label>
                                             <input type="text" class="form-control" id="contact"
-                                                value="<?php echo htmlspecialchars($person_id['contact']); ?>"
+                                                value="<?php echo htmlspecialchars($staff_id['contact']); ?>"
                                                 placeholder="Enter Contact" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control" id="email"
-                                                value="<?php echo htmlspecialchars($person_id['email']); ?>"
+                                                value="<?php echo htmlspecialchars($staff_id['email']); ?>"
                                                 placeholder="Enter Email" required>
                                         </div>
                                         <div class="card-footer">
@@ -245,7 +198,7 @@
 
         function updateRecord() {
             // Collect data and send AJAX request to update the student information
-            var person_id = document.getElementById("person_id").value;
+            var staff_id = document.getElementById("staff_id").value;
             var firstname = document.getElementById("firstname").value;
             var middlename = document.getElementById("middlename").value;
             var lastname = document.getElementById("lastname").value;
@@ -256,7 +209,7 @@
                 type: "POST",
                 url: '../action/personListUpdate_action.php',
                 data: {
-                    person_id: person_id,
+                    staff_id: staff_id,
                     firstname: firstname,
                     middlename: middlename,
                     lastname: lastname,

@@ -8,7 +8,7 @@ try {
     // Prepare SQL statement to get user data including hashed password
     $stmt = $conn->prepare("SELECT
                                 userid,
-                                fullname,
+                               staff_id,
                                 username,
                                 password AS hashed_password
                             FROM 

@@ -4,22 +4,22 @@ include "../connect.php";
 
 try {
     // Check if POST variables are set
-    if (isset($_POST["task_name"]) && isset($_POST["person_id"]) && isset($_POST["project_id"]) && isset($_POST["task_created"]) && isset($_POST["due_date"])) {
+    if (isset($_POST["task_name"]) && isset($_POST["staff_id"]) && isset($_POST["project_id"]) && isset($_POST["task_created"]) && isset($_POST["due_date"])) {
 
         // Get POST data
         $task_name = $_POST["task_name"];
-        $person_id = $_POST["person_id"];
+        $staff_id = $_POST["staff_id"];
         $project_id = $_POST["project_id"];
         $task_created = $_POST["task_created"];
         $due_date = $_POST["due_date"];
        
 
         // Prepare the SQL statement
-        $stmt = $conn->prepare("INSERT INTO task (task_name, person_id, project_id, task_created, due_date) VALUES (:task_name, :person_id, :project_id, :task_created, :due_date)");
+        $stmt = $conn->prepare("INSERT INTO task (task_name, staff_id, project_id, task_created, due_date) VALUES (:task_name, :staff_id, :project_id, :task_created, :due_date)");
 
         // Bind parameters
         $stmt->bindParam(':task_name', $task_name);
-        $stmt->bindParam(':person_id', $person_id);
+        $stmt->bindParam(':staff_id', $staff_id);
         $stmt->bindParam(':project_id', $project_id);
         $stmt->bindParam(':task_created', $task_created);
         $stmt->bindParam(':due_date', $due_date);
@@ -37,7 +37,7 @@ try {
     }
 } catch (PDOException $e) {
     // Log error to a file
-    error_log("Database error: " . $e->getMessage(), 3, 'errors.log');
+    echo "<script>console.error('Database error: " . addslashes($e->getMessage()) . "');</script>";
 
     echo json_encode(array("response" => "error", "message" => "Database Error"));
     echo $e->getMessage();  

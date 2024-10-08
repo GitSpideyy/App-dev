@@ -28,7 +28,7 @@
 
                 <form id="login">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="fullname" id="fullname" name="fullname">
+                        <input type="text" class="form-control" placeholder="Enter Staff ID" id="staff_id" name="staff_id">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user-tie"></span>
@@ -85,9 +85,10 @@
 
     <script>
         function SaveRecord() {
-            var FullName = document.getElementById("fullname").value;
+            var staff_id = document.getElementById("staff_id").value;
             var UserName = document.getElementById("username").value;
             var Password = document.getElementById("password").value;
+            var role_id = 1;
             
            
 
@@ -95,9 +96,10 @@
                 type: "POST",
                 url: '../action/createAccount_action.php',
                 data: {
-                    FullName: FullName,
+                    staff_id: staff_id,
                     UserName: UserName,
                     Password: Password,
+                    role_id: role_id
                  
                 },
                 success: function (data) {

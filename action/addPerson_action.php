@@ -15,7 +15,7 @@ try {
         $email = $_POST["email"];
 
         // Prepare the SQL statement
-        $stmt = $conn->prepare("INSERT INTO person (firstname, middlename, lastname, contact, email) VALUES (:firstname, :middlename, :lastname, :contact, :email)");
+        $stmt = $conn->prepare("INSERT INTO staff (firstname, middlename, lastname, contact, email) VALUES (:firstname, :middlename, :lastname, :contact, :email)");
 
         // Bind parameters
         $stmt->bindParam(':firstname', $firstname);

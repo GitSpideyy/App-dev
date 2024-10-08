@@ -25,9 +25,9 @@
     <div class="wrapper">
 
         <!-- Preloader -->
-       
 
-       
+
+
 
         <!-- Main Sidebar Container -->
         <?php include '../sidebar.php'; ?>
@@ -39,9 +39,9 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Person List</h1>
+                            <h1 class="m-0">Project List</h1>
                         </div><!-- /.col -->
-                        
+
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -61,48 +61,43 @@
                                     <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
-                                                <th>Contact</th>
-                                                <th>Email</th>
+                                                <th>User ID</th>
+                                                <th>User Name</th>
+                                                <th>Password</th>
+                                                <th>Role</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            include "../connect.php";
                                             try {
-                                                // Establish database connection
-                                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                                include '../connect.php';
 
-                                                // Fetch records from the database
-                                                $stmt = $conn->prepare("SELECT * FROM staff"); 
+                                                $stmt = $conn->prepare("
+                                        SELECT u.userid, u.username, u.password, r.description 
+                                        FROM user u 
+                                        JOIN role r ON u.role_id = r.role_id
+                                    ");
                                                 $stmt->execute();
 
                                                 if ($stmt->rowCount() > 0) {
                                                     while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                         echo "<tr>";
-                                                        echo "<td>" . htmlspecialchars($obj["staff_id"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($obj["firstname"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($obj["middlename"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($obj["lastname"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($obj["contact"]) . "</td>";
-                                                        echo "<td>" . htmlspecialchars($obj["email"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($obj["userid"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($obj["username"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($obj["password"]) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($obj["description"]) . "</td>";
                                                         echo "<td>
-                                               <button class='btn btn-danger btn-sm' onclick='deletePerson(\"" . htmlspecialchars($obj["staff_id"]) . "\")'>Delete</button>
-                                               <a href='personListUpdate.php?staff_id=" . htmlspecialchars($obj["staff_id"]) . "' class='btn btn-primary btn-sm'>Update</a>
-                                                              </td>";
-
+                                                <button class='btn btn-danger btn-sm' onclick='deleteProject(\"" . htmlspecialchars($obj["userid"]) . "\")'>Delete</button>
+                                                <a href='projectListUpdate.php?userid=" . htmlspecialchars($obj["userid"]) . "' class='btn btn-primary btn-sm'>Update</a>
+                                            </td>";
                                                         echo "</tr>";
                                                     }
                                                 } else {
-                                                    echo "<tr><td colspan='8'>No records found</td></tr>";
+                                                    echo "<tr><td colspan='5'>No records found</td></tr>";
                                                 }
                                             } catch (PDOException $e) {
-                                                echo "<tr><td colspan='8'>Connection failed: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+                                                echo "<tr><td colspan='5'>Connection failed: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                                             }
                                             ?>
                                         </tbody>
@@ -115,7 +110,7 @@
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
-             
+
         </div>
         <!-- /.content-wrapper -->
 
@@ -141,12 +136,12 @@
     <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../dist/js/adminlte.js"></script>
-     <!-- Toastr -->
-     <script src="../plugins/toastr/toastr.min.js"></script>
-     <!-- bs-custom-file-input -->
-     <script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- Toastr -->
+    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- bs-custom-file-input -->
+    <script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
-    <!-- PAGE PLUGINS -->
+    <!-- PAGE ../PLUGINS -->
     <!-- jQuery Mapael -->
     <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
     <script src="../plugins/raphael/raphael.min.js"></script>
@@ -155,7 +150,7 @@
     <!-- ChartJS -->
     <script src="../plugins/chart.js/Chart.min.js"></script>
 
-    <!-- DataTables  & Plugins -->
+    <!-- DataTables  & ../Plugins -->
     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -170,37 +165,37 @@
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <script>
-            function deletePerson(staff_id) {
-                $.ajax({
-                    type: "POST",
-                    url: '../action/personListDelete_action.php',
-                    data: { staff_id: staff_id },
-                    success: function (data) {
-                        console.log("Response from server: ", data); // Log the response to check if data is received
-                        try {
-                            const obj = JSON.parse(data);
-                            if (obj.response === 'success') {
-                                toastr.success(obj.message);
+        function deleteProject(userid) {
+            $.ajax({
+                type: "POST",
+                url: '../action/userListDelete_action.php',
+                data: { userid: userid },
+                success: function (data) {
+                    console.log("Response from server: ", data); // Log the response to check if data is received
+                    try {
+                        const obj = JSON.parse(data);
+                        if (obj.response === 'success') {
+                            toastr.success(obj.message);
 
-                                // Delay the reload by 3 seconds (1000 milliseconds)
-                                setTimeout(function() {
-                                    location.reload(); // Reload the page after the delay
-                                }, 1000);
-                            } else {
-                                toastr.error(obj.message);
-                            }
-                        } catch (e) {
-                            console.error("Error parsing JSON: ", e);
-                            toastr.error("An error occurred while processing the response.");
+                            // Delay the reload by 3 seconds (1000 milliseconds)
+                            setTimeout(function () {
+                                location.reload(); // Reload the page after the delay
+                            }, 1000);
+                        } else {
+                            toastr.error(obj.message);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        toastr.error("An error occurred. Please try again.");
+                    } catch (e) {
+                        console.error("Error parsing JSON: ", e);
+                        toastr.error("An error occurred while processing the response.");
                     }
-                });
-            }
-</script>
-    <script>    
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    toastr.error("An error occurred. Please try again.");
+                }
+            });
+        }
+    </script>
+    <script>
         $(function () {
             $("#example2").DataTable({
                 "responsive": true,

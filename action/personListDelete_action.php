@@ -2,16 +2,16 @@
 include "../connect.php";
 
 try {
-    // Check if person_id is set
-    if (isset($_POST['person_id'])) {
-        // Get the person_id
-        $person_id = $_POST['person_id'];
+    // Check if staff_id is set
+    if (isset($_POST['staff_id'])) {
+        // Get the staff_id
+        $staff_id = $_POST['staff_id'];
 
         // Prepare the SQL statement with a named placeholder
-        $stmt = $conn->prepare("DELETE FROM person WHERE person_id = :person_id");
+        $stmt = $conn->prepare("DELETE FROM staff WHERE staff_id = :staff_id");
 
         // Bind the parameter
-        $stmt->bindParam(':person_id', $person_id);
+        $stmt->bindParam(':staff_id', $staff_id);
 
         // Execute the statement
         if ($stmt->execute()) {

@@ -1,6 +1,7 @@
 <!-- index.php -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,58 +11,82 @@
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 </head>
+
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
-        <!-- Navbar (kept in the dashboard) -->
-        <nav class="main-header navbar navbar-expand navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index.php" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
+      
         <!-- Main Sidebar Container -->
         <?php include '../sidebar.php'; ?>
 
         <!-- Content Wrapper -->
+        <?php
+        // Database connection
+        include '../connect.php';
+
+        //for staff
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Query to get the total number of staff
+        $sql = "SELECT COUNT(staff_id) AS total_staff FROM staff";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $total_staff = 0;
+        if ($result) {
+            $total_staff = $result['total_staff'];
+        } else {
+            echo "0 results";
+        }
+
+        // Query to get the total number of projects
+        $sql = "SELECT COUNT(project_id) AS total_projects FROM project";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $total_projects = 0;
+        if ($result) {
+            $total_projects = $result['total_projects'];
+        } else {
+            echo "0 results";
+        }
+
+        // Query to get the total number of tasks
+        $sql = "SELECT COUNT(task_id) AS total_tasks FROM task";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $total_tasks = 0;
+        if ($result) {
+            $total_tasks = $result['total_tasks'];
+        } else {
+            echo "0 results";
+        }
+
+        // Query to get the total number of users
+        $sql = "SELECT COUNT(userid) AS total_users FROM user";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $total_users = 0;
+        if ($result) {
+            $total_users = $result['total_users'];
+        } else {
+            echo "0 results";
+        }
+
+        
+
+
+        // Close the connection
+        $conn = null;
+        ?>
+
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
@@ -79,8 +104,70 @@
                 </div>
             </div>
             <!-- Main content goes here -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3><?php echo $total_staff; ?></h3>
+
+                            <p>Staff</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="../controller/personList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3><?php echo $total_projects?><sup style="font-size: 20px"></sup></h3>
+
+                            <p>Projects</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="../controller/projectList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3><?php echo $total_tasks;?></h3>
+
+                            <p>Task</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="../controller/taskList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3><?php echo $total_users?></h3>
+
+                            <p>User</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="../controller/userList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
         </div>
-Wx`
+
         <!-- Footer -->
         <footer class="main-footer">
             <!-- Footer content -->
@@ -94,4 +181,5 @@ Wx`
     <script src="../dist/js/adminlte.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
 </body>
+
 </html>
