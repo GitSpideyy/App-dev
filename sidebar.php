@@ -50,11 +50,24 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <span class="brand-text font-weight-light">Task Management System</span>
+      <img src="../dist/img/mainlogo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../dist/img/profile.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander Pierce</a>
+        </div>
+      </div>
+      <a href="index3.html" class="brand-link">
+        <span class="brand-text font-weight-light">Task Management System</span>
+      </a>
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
@@ -87,19 +100,19 @@
                            <!-- person Menu -->
                         <i class="nav-icon fas fa-user-tie"></i>
                         <p>
-                            Person
+                            Staff
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../controller/personList.php" class="nav-link">
-                                <p>Person List</p>
+                            <a href="../controller/StaffList.php" class="nav-link">
+                                <p>Staff List</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../controller/addPerson.php" class="nav-link">
-                                <p> Add Person</p>
+                            <a href="../controller/addStaff.php" class="nav-link">
+                                <p> Add Staff</p>
                             </a>
                         </li>
                     </ul>

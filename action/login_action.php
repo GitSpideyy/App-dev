@@ -24,6 +24,7 @@ try {
 
             // Verify the provided password against the hashed password
             if (password_verify($password, $user['hashed_password'])) {
+                
                 echo json_encode(array("response" => "success", "message" => "Successfully Logged In"));
             } else {
                 echo json_encode(array("response" => "error", "message" => "Invalid username or password"));
