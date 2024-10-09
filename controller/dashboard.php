@@ -1,7 +1,73 @@
-<!-- index.php -->
+<?php
+// Include the authentication check
+include '../authCheck.php';
+
+// Database connection
+include '../connect.php';
+
+//for staff
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to get the total number of staff
+$sql = "SELECT COUNT(staff_id) AS total_staff FROM staff";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$total_staff = 0;
+if ($result) {
+    $total_staff = $result['total_staff'];
+} else {
+    echo "0 results";
+}
+
+// Query to get the total number of projects
+$sql = "SELECT COUNT(project_id) AS total_projects FROM project";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$total_projects = 0;
+if ($result) {
+    $total_projects = $result['total_projects'];
+} else {
+    echo "0 results";
+}
+
+// Query to get the total number of tasks
+$sql = "SELECT COUNT(task_id) AS total_tasks FROM task";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$total_tasks = 0;
+if ($result) {
+    $total_tasks = $result['total_tasks'];
+} else {
+    echo "0 results";
+}
+
+// Query to get the total number of users
+$sql = "SELECT COUNT(userid) AS total_users FROM user";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$total_users = 0;
+if ($result) {
+    $total_users = $result['total_users'];
+} else {
+    echo "0 results";
+}
+
+
+// Close the connection
+$conn = null;
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,82 +77,12 @@
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 </head>
-
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
-      
         <!-- Main Sidebar Container -->
         <?php include '../sidebar.php'; ?>
 
         <!-- Content Wrapper -->
-        <?php
-        // Database connection
-        include '../connect.php';
-
-        //for staff
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Query to get the total number of staff
-        $sql = "SELECT COUNT(staff_id) AS total_staff FROM staff";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $total_staff = 0;
-        if ($result) {
-            $total_staff = $result['total_staff'];
-        } else {
-            echo "0 results";
-        }
-
-        // Query to get the total number of projects
-        $sql = "SELECT COUNT(project_id) AS total_projects FROM project";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $total_projects = 0;
-        if ($result) {
-            $total_projects = $result['total_projects'];
-        } else {
-            echo "0 results";
-        }
-
-        // Query to get the total number of tasks
-        $sql = "SELECT COUNT(task_id) AS total_tasks FROM task";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $total_tasks = 0;
-        if ($result) {
-            $total_tasks = $result['total_tasks'];
-        } else {
-            echo "0 results";
-        }
-
-        // Query to get the total number of users
-        $sql = "SELECT COUNT(userid) AS total_users FROM user";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $total_users = 0;
-        if ($result) {
-            $total_users = $result['total_users'];
-        } else {
-            echo "0 results";
-        }
-
-        
-
-
-        // Close the connection
-        $conn = null;
-        ?>
-
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
@@ -94,12 +90,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">Dashboard</h1>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard</li>
-                            </ol>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -110,7 +101,6 @@
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3><?php echo $total_staff; ?></h3>
-
                             <p>Staff</p>
                         </div>
                         <div class="icon">
@@ -125,7 +115,6 @@
                     <div class="small-box bg-success">
                         <div class="inner">
                             <h3><?php echo $total_projects?><sup style="font-size: 20px"></sup></h3>
-
                             <p>Projects</p>
                         </div>
                         <div class="icon">
@@ -140,7 +129,6 @@
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3><?php echo $total_tasks;?></h3>
-
                             <p>Task</p>
                         </div>
                         <div class="icon">
@@ -155,7 +143,6 @@
                     <div class="small-box bg-danger">
                         <div class="inner">
                             <h3><?php echo $total_users?></h3>
-
                             <p>User</p>
                         </div>
                         <div class="icon">
@@ -181,5 +168,4 @@
     <script src="../dist/js/adminlte.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
 </body>
-
 </html>
