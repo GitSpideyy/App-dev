@@ -28,7 +28,7 @@ if ($result) {
 ?>
 <!-- Navbar (kept in the dashboard) -->
 <nav class="main-header navbar navbar-expand navbar-dark">
-    
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -68,7 +68,7 @@ if ($result) {
     <a href="index3.html" class="brand-link">
         <img src="../dist/img/mainlogo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Project Management</span>
     </a>
 
     <!-- Sidebar -->
@@ -79,7 +79,7 @@ if ($result) {
                 <img src="../dist/img/profile.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?php   echo  $fullname; ?></a>
+                <a href="#" class="d-block"><?php echo $fullname; ?></a>
             </div>
         </div>
         <a href="index3.html" class="brand-link">
@@ -121,14 +121,15 @@ if ($result) {
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../controller/StaffList.php" class="nav-link">
-                                <p>Staff List</p>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="../controller/addStaff.php" class="nav-link">
                                 <p> Add Staff</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../controller/StaffList.php" class="nav-link">
+                                <p>Staff List</p>
                             </a>
                         </li>
                     </ul>
@@ -186,6 +187,11 @@ if ($result) {
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                            <a href="../controller/addUser.php" class="nav-link">
+                                <p> Add User </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="../controller/userList.php" class="nav-link">
                                 <p> User List</p>
@@ -193,13 +199,17 @@ if ($result) {
                         </li>
                     </ul>
                 </li>
-                <!-- logout Menu -->
+                <!-- logout Menu -->    
                 <li class="nav-item">
-                    <a href="../controller/login.php" class="nav-link">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <p> Logout </p>
-                    </a>
+                    <form action="../controller/logout.php" method="post" style="display: inline;">
+                        <button type="submit" class="nav-link btn btn-link"
+                            style="color: inherit; text-align: left; padding: 0;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <p>Logout</p>
+                        </button>
+                    </form>
                 </li>
+
                 </li>
             </ul>
         </nav>

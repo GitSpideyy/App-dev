@@ -1,70 +1,14 @@
 <?php
+session_start();
 // Include the authentication check
 include '../authCheck.php';
-
 // Database connection
-include '../connect.php';
-
-//for staff
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    include '../connect.php';
+} catch (PDOException $e) {
+    die("Connection failed: {$e->getMessage()}");
 }
 
-// Query to get the total number of staff
-$sql = "SELECT COUNT(staff_id) AS total_staff FROM staff";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$total_staff = 0;
-if ($result) {
-    $total_staff = $result['total_staff'];
-} else {
-    echo "0 results";
-}
-
-// Query to get the total number of projects
-$sql = "SELECT COUNT(project_id) AS total_projects FROM project";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$total_projects = 0;
-if ($result) {
-    $total_projects = $result['total_projects'];
-} else {
-    echo "0 results";
-}
-
-// Query to get the total number of tasks
-$sql = "SELECT COUNT(task_id) AS total_tasks FROM task";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$total_tasks = 0;
-if ($result) {
-    $total_tasks = $result['total_tasks'];
-} else {
-    echo "0 results";
-}
-
-// Query to get the total number of users
-$sql = "SELECT COUNT(userid) AS total_users FROM user";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$total_users = 0;
-if ($result) {
-    $total_users = $result['total_users'];
-} else {
-    echo "0 results";
-}
-
-
-// Close the connection
-$conn = null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,6 +20,10 @@ $conn = null;
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
@@ -90,71 +38,15 @@ $conn = null;
                         <div class="col-sm-6">
                             <h1 class="m-0">Dashboard</h1>
                         </div>
-                       
                     </div>
                 </div>
             </div>
             <!-- Main content goes here -->
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3><?php echo $total_staff; ?></h3>
-                            <p>Staff</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="../controller/personList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3><?php echo $total_projects?><sup style="font-size: 20px"></sup></h3>
-                            <p>Projects</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="../controller/projectList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3><?php echo $total_tasks;?></h3>
-                            <p>Task</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="../controller/taskList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3><?php echo $total_users?></h3>
-                            <p>User</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="../controller/userList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
+             
+           
+            <?php include '../controller/staffView.php'; ?>
         </div>
-
+       
         <!-- Footer -->
         <footer class="main-footer">
             <!-- Footer content -->
@@ -167,5 +59,32 @@ $conn = null;
     <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="../dist/js/adminlte.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
+        <!-- DataTables  & Plugins -->
+        <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script>    
+        $(function () {
+            $("#example2").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": true,
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 </body>
 </html>

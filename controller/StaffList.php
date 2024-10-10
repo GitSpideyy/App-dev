@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../authCheck.php";?>
+<?php 
+session_start();
+include "../authCheck.php";?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +56,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Person Information</h3>
+                                    <h3 class="card-title">Staff Information</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -93,7 +95,7 @@
                                                         echo "<td>" . htmlspecialchars($obj["email"]) . "</td>";
                                                         echo "<td>
                                                <button class='btn btn-danger btn-sm' onclick='deletePerson(\"" . htmlspecialchars($obj["staff_id"]) . "\")'>Delete</button>
-                                               <a href='personListUpdate.php?staff_id=" . htmlspecialchars($obj["staff_id"]) . "' class='btn btn-primary btn-sm'>Update</a>
+                                               <a href='staffListUpdate.php?staff_id=" . htmlspecialchars($obj["staff_id"]) . "' class='btn btn-primary btn-sm'>Update</a>
                                                               </td>";
 
                                                         echo "</tr>";
@@ -173,7 +175,7 @@
             function deletePerson(staff_id) {
                 $.ajax({
                     type: "POST",
-                    url: '../action/personListDelete_action.php',
+                    url: '../action/staffListDelete_action.php',
                     data: { staff_id: staff_id },
                     success: function (data) {
                         console.log("Response from server: ", data); // Log the response to check if data is received

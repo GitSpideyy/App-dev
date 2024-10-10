@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../authCheck.php";?>
+<?php 
+session_start();
+include "../authCheck.php";?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +56,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Person Information</h3>
+                                    <h3 class="card-title">Project Information</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">

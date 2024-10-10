@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../authCheck.php";?>
+<?php 
+session_start();
+include "../authCheck.php";?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +91,7 @@
                                                         echo "<td>" . htmlspecialchars($obj["description"]) . "</td>";
                                                         echo "<td>
                                                 <button class='btn btn-danger btn-sm' onclick='deleteProject(\"" . htmlspecialchars($obj["userid"]) . "\")'>Delete</button>
-                                                <a href='projectListUpdate.php?userid=" . htmlspecialchars($obj["userid"]) . "' class='btn btn-primary btn-sm'>Update</a>
+                                                <a href='userListUpdate.php?userid=" . htmlspecialchars($obj["userid"]) . "' class='btn btn-primary btn-sm'>Update</a>
                                             </td>";
                                                         echo "</tr>";
                                                     }

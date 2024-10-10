@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    session_start();
 <?php
 session_start();
  include "../authCheck.php"; ?>
@@ -31,7 +32,7 @@ session_start();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Add a Staff</h1>
+                            <h1 class="m-0">Add a Project</h1>
                         </div>
                         <div class="col-sm-6">
                             <!-- Optional right column content -->
@@ -50,39 +51,44 @@ session_start();
                             <!-- general form elements -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Person Information</h3>
+                                    <h3 class="card-title">Project Information</h3>
                                 </div>
-                                <!-- /.card-header -->
-                                <!-- form start -->
-                                <form id="login" onsubmit="return validateForm()">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="First Name">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Middle Name">Middle Name</label>
-                                            <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Last Name">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contact">Contact</label>
-                                            <input type="text" class="form-control" id="contact" placeholder="Enter Contact Number" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" placeholder="Enter Email" required autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <!-- /.card-body -->
+                                <form id="login">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter Staff ID" id="staff_id" name="staff_id">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-tie"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" id="password"
+                            name="password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary btn-block"
+                                onclick="SaveRecord()">Submit</button>
+                        </div>
+                        
+                    </div>
 
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                    </div>
-                                </form>
+                </form>
                             </div>
                             <!-- /.card -->
                         </div>
@@ -93,6 +99,7 @@ session_start();
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+
         </div>
         <!-- /.content-wrapper -->
 
@@ -131,54 +138,43 @@ session_start();
     <script src="../plugins/chart.js/Chart.min.js"></script>
 
     <script>
-        function validateForm() {
-            // Check if all required fields are filled
-            var requiredFields = document.querySelectorAll('input[required]');
-            for (var i = 0; i < requiredFields.length; i++) {
-                if (!requiredFields[i].value) {
-                    toastr.error('Please fill in all required fields.');
-                    return false; // Prevent form submission
-                }
-            }
-
-            SaveRecord();
-            return false; // Prevent form submission as we're handling it with AJAX
-        }
-
         function SaveRecord() {
-            var firstname = document.getElementById("firstName").value;
-            var middlename = document.getElementById("middleName").value;
-            var lastname = document.getElementById("lastName").value;
-            var contact = document.getElementById("contact").value;
-            var email = document.getElementById("email").value;
+            var staff_id = document.getElementById("staff_id").value;
+            var UserName = document.getElementById("username").value;
+            var Password = document.getElementById("password").value;
+            var role_id = 1;
+            
+           
 
             $.ajax({
                 type: "POST",
-                url: '../action/addStaff_action.php',
+                url: '../action/createAccount_action.php',
                 data: {
-                    firstname: firstname,
-                    middlename: middlename,
-                    lastname: lastname,
-                    contact: contact,
-                    email: email
+                    staff_id: staff_id,
+                    UserName: UserName,
+                    Password: Password,
+                    role_id: role_id
+                 
                 },
                 success: function (data) {
                     const obj = JSON.parse(data);
                     if (obj.response == 'success') {
                         toastr.success(obj.message);
-                        window.setTimeout(function () {
-                            window.location.href = "../controller/staffList.php";
-                        }, 1000);
                     } else {
                         toastr.error(obj.message);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    toastr.error("An error occurred. Please try again.");
+                    alert("An error occurred. Please try again.");
                 }
             });
+        }
+
+        function goBack() {
+            window.history.back();
         }
     </script>
 
 </body>
+
 </html>

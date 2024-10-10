@@ -73,7 +73,14 @@ include "../authCheck.php"; ?>
                                     $projectStmt->execute();
                                     $projects = $projectStmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        
+                                    // Retrieve task details if task_id is provided
+                                    $task = null;
+                                    if (isset($_GET['task_id'])) {
+                                        $taskStmt = $conn->prepare("SELECT * FROM task WHERE task_id = :task_id");
+                                        $taskStmt->bindParam(':task_id', $_GET['task_id']);
+                                        $taskStmt->execute();
+                                        $task = $taskStmt->fetch(PDO::FETCH_ASSOC);
+                                    }
 
                                 } catch (PDOException $e) {
                                     echo "Connection failed: " . $e->getMessage();
@@ -85,16 +92,17 @@ include "../authCheck.php"; ?>
 
                                 <div class="container">
                                     <form id="updateForm" onsubmit="return validateForm()">
+                                        <input type="hidden" name="task_id" id="task_id" value="<?php echo isset($task['task_id']) ? htmlspecialchars($task['task_id'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                                         <div class="form-group">
                                             <label for="Task Name">Task Name</label>
-                                            <input type="text" class="form-control" id="task_name" placeholder="Enter Task Name" required autocomplete="off">
+                                            <input type="text" class="form-control" name="task_name" id="task_name" placeholder="Enter Task Name" required autocomplete="off" value="<?php echo isset($task['task_name']) ? htmlspecialchars($task['task_name'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="Project">Project</label>
                                             <select class="form-control" id="project_id" required>
-                                                <option value="" disabled selected>Select Project</option>
+                                                <option value="" disabled>Select Project</option>
                                                 <?php foreach ($projects as $project): ?>
-                                                    <option value="<?php echo $project['project_id']; ?>">
+                                                    <option value="<?php echo $project['project_id']; ?>" <?php echo $task && $task['project_id'] == $project['project_id'] ? 'selected' : ''; ?>>
                                                         <?php echo $project['project_id'] . " - " . $project['project_name']; ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -104,9 +112,9 @@ include "../authCheck.php"; ?>
                                         <div class="form-group">
                                             <label for="Person">Person</label>
                                             <select class="form-control" id="staff_id" required>
-                                                <option value="" disabled selected>Select Person</option>
+                                                <option value="" disabled>Select Person</option>
                                                 <?php foreach ($persons as $person): ?>
-                                                    <option value="<?php echo $person['staff_id']; ?>">
+                                                    <option value="<?php echo $person['staff_id']; ?>" <?php echo $task && $task['staff_id'] == $person['staff_id'] ? 'selected' : ''; ?>>
                                                         <?php echo $person['staff_id'] . " - " . $person['firstname'] . " " . $person['lastname']; ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -115,16 +123,25 @@ include "../authCheck.php"; ?>
                                         
                                         <div class="form-group">
                                             <label for="Creation Date">Creation Date</label>
-                                            <input type="date" class="form-control" id="task_created" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                            <input type="date" class="form-control" id="task_created" value="<?php echo $task ? $task['task_created'] : date('Y-m-d'); ?>" readonly>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="Project Due Date">Task Due Date</label>
-                                            <input type="date" class="form-control" id="due_date" placeholder="Enter Task Due Date" required autocomplete="off">
+                                            <input type="date" class="form-control" id="due_date" placeholder="Enter Task Due Date" required autocomplete="off" value="<?php echo $task ? $task['due_date'] : ''; ?>">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label for="Status">Status</label>
+                                            <select class="form-control" id="status" required>
+                                                <option value="" disabled>Select Status</option>
+                                                <option value="On Going" <?php echo $task && $task['status'] == 'On Going' ? 'selected' : ''; ?>>On Going</option>
+                                                <option value="Not Started" <?php echo $task && $task['status'] == 'Not Started' ? 'selected' : ''; ?>>Not Started</option>
+                                                <option value="Completed" <?php echo $task && $task['status'] == 'Completed' ? 'selected' : ''; ?>>Completed</option>
+                                                
+                                            </select>
+                                        </div>
                                         <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary btn-block">Save Task</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
                                         </div>
                                     </form>
                                 </div>
@@ -181,21 +198,26 @@ include "../authCheck.php"; ?>
 
         function saveTask() {
             // Collect data and send AJAX request to save the task
+            var task_id = document.getElementById("task_id").value;
             var task_name = document.getElementById("task_name").value;
             var staff_id = document.getElementById("staff_id").value;
             var project_id = document.getElementById("project_id").value;
             var task_created = document.getElementById("task_created").value;
             var due_date = document.getElementById("due_date").value;
+            var status = document.getElementById("status").value;
+     
 
             $.ajax({
                 type: "POST",
-                url: '../action/addTask_action.php',
+                url: '../action/taskListUpdate_action.php',
                 data: {
+                    task_id: task_id,
                     task_name: task_name,
                     staff_id: staff_id,
                     project_id: project_id,
                     task_created: task_created,
-                    due_date: due_date
+                    due_date: due_date,
+                    status: status
                 },
                 success: function (data) {
                     try {

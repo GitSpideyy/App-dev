@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../authCheck.php";?>
+<?php 
+session_start();
+include "../authCheck.php";?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +56,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Person Information</h3>
+                                    <h3 class="card-title">Task Information</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -79,39 +81,29 @@
                                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                                // Fetch records from the database
-                                                $stmt = $conn->prepare("SELECT * FROM task");
+                                                // Fetch records from the database using JOIN
+                                                $stmt = $conn->prepare("
+                                                    SELECT 
+                                                        task.task_id, 
+                                                        task.task_name, 
+                                                        task.task_created, 
+                                                        task.due_date, 
+                                                        task.status, 
+                                                        staff.staff_id, 
+                                                        staff.firstname, 
+                                                        staff.lastname, 
+                                                        project.project_id, 
+                                                        project.project_name 
+                                                    FROM task
+                                                    JOIN staff ON task.staff_id = staff.staff_id
+                                                    JOIN project ON task.project_id = project.project_id
+                                                ");
                                                 $stmt->execute();
-                                                
-                                                $start_date = isset($_POST['start_date']) ? htmlspecialchars($_POST['start_date']) : '';
-                                                $end_date = isset($_POST['end_date']) ? htmlspecialchars($_POST['end_date']) : '';
-
-                                                $personStmt = $conn->prepare("SELECT staff_id, firstname, lastname FROM staff");
-                                                $personStmt->execute();
-                                                $persons = $personStmt->fetchAll(PDO::FETCH_ASSOC);
-
-                                                $projectStmt = $conn->prepare("SELECT project_id, project_name FROM project");
-                                                $projectStmt->execute();
-                                                $projects = $projectStmt->fetchAll(PDO::FETCH_ASSOC);
 
                                                 if ($stmt->rowCount() > 0) {
                                                     while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                        $personName = '';
-                                                        $projectName = '';
-
-                                                        foreach ($persons as $person) {
-                                                            if ($person['staff_id'] == $obj['staff_id']) {
-                                                                $personName = $person['staff_id'] . ' - ' . $person['firstname'] . ' ' . $person['lastname'];
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        foreach ($projects as $project) {
-                                                            if ($project['project_id'] == $obj['project_id']) {
-                                                                $projectName = $project['project_id']. ' - ' . $project['project_name'];
-                                                                break;
-                                                            }
-                                                        }
+                                                        $personName = $obj['staff_id'] . ' - ' . $obj['firstname'] . ' ' . $obj['lastname'];
+                                                        $projectName = $obj['project_id'] . ' - ' . $obj['project_name'];
 
                                                         echo "<tr>";
                                                         echo "<td>" . htmlspecialchars($obj["task_id"]) . "</td>";
@@ -122,17 +114,16 @@
                                                         echo "<td>" . htmlspecialchars($obj["due_date"]) . "</td>";
                                                         echo "<td>" . htmlspecialchars($obj["status"]) . "</td>";
                                                         echo "<td>
-                                               <button class='btn btn-danger btn-sm' onclick='deleteProject(\"" . htmlspecialchars($obj["task_id"]) . "\")'>Delete</button>
+                                               <button class='btn btn-danger btn-sm' onclick='deleteTask(\"" . htmlspecialchars($obj["task_id"]) . "\")'>Delete</button>
                                                <a href='taskListUpdate.php?task_id=" . htmlspecialchars($obj["task_id"]) . "' class='btn btn-primary btn-sm'>Update</a>
                                                               </td>";
-
                                                         echo "</tr>";
                                                     }
                                                 } else {
-                                                    echo "<tr><td colspan='7'>No records found</td></tr>";
+                                                    echo "<tr><td colspan='8'>No records found</td></tr>";
                                                 }
                                             } catch (PDOException $e) {
-                                                echo "<tr><td colspan='7'>Connection failed: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+                                                echo "<tr><td colspan='8'>Connection failed: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                                             }
                                             ?>
                                         </tbody>
@@ -160,7 +151,7 @@
 
         </footer>
     </div>
-    <!-- ./wrapper -->
+    <!--../ ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
@@ -199,10 +190,10 @@
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <script>
-        function deleteProject(task_id) {
+        function deleteTask(task_id) {
             $.ajax({
                 type: "POST",
-                url: '../action/projectListDelete_action.php',
+                url: '../action/taskListDelete_action.php',
                 data: { task_id: task_id },
                 success: function (data) {
                     console.log("Response from server: ", data); // Log the response to check if data is received

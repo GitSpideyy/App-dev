@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../authCheck.php";?>
+    session_start();
+<?php
+session_start();
+ include "../authCheck.php"; ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TaskManagement | System </title>
+    <title>TaskManagement | System</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
@@ -19,10 +22,6 @@
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
 
-        <!-- Preloader -->
-
-      
-
         <!-- Main Sidebar Container -->
         <?php include '../sidebar.php'; ?>
 
@@ -34,12 +33,12 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">Add a Project</h1>
-                        </div><!-- /.col -->
+                        </div>
                         <div class="col-sm-6">
-                           
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
+                            <!-- Optional right column content -->
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.content-header -->
 
@@ -52,7 +51,7 @@
                             <!-- general form elements -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Person Information</h3>
+                                    <h3 class="card-title">Project Information</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <!-- form start -->
@@ -66,14 +65,13 @@
                                             <label for="Creation Date">Creation Date</label>
                                             <input type="date" class="form-control" id="project_created" value="<?php echo date('Y-m-d'); ?>" readonly>
                                         </div>
-
                                         <div class="form-group">
-                                            <label for="Project Start ">Project start </label>
-                                            <input type="date" class="form-control" id="start_date" placeholder="Enter Project Start " required autocomplete="off">
+                                            <label for="Project Start">Project Start</label>
+                                            <input type="date" class="form-control" id="start_date" placeholder="Enter Project Start" required autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="Project End">Project End</label>
-                                            <input type="date" class="form-control" id="end_date" placeholder="Enter Project End"  required autocomplete="off">
+                                            <input type="date" class="form-control" id="end_date" placeholder="Enter Project End" required autocomplete="off">
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -88,7 +86,8 @@
                         <!--/.col (right) -->
                     </div>
                     <!-- /.row -->
-                </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
 
@@ -103,7 +102,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-
+            <!-- Footer content -->
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -149,8 +148,6 @@
             var project_created = document.getElementById("project_created").value;
             var start_date = document.getElementById("start_date").value;
             var end_date = document.getElementById("end_date").value;
-           
-        
 
             $.ajax({
                 type: "POST",

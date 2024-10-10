@@ -12,10 +12,11 @@ try {
         $project_id = $_POST["project_id"];
         $task_created = $_POST["task_created"];
         $due_date = $_POST["due_date"];
+        $status = "Not Started";
        
 
         // Prepare the SQL statement
-        $stmt = $conn->prepare("INSERT INTO task (task_name, staff_id, project_id, task_created, due_date) VALUES (:task_name, :staff_id, :project_id, :task_created, :due_date)");
+        $stmt = $conn->prepare("INSERT INTO task (task_name, staff_id, project_id, task_created, due_date, status) VALUES (:task_name, :staff_id, :project_id, :task_created, :due_date, :status)");
 
         // Bind parameters
         $stmt->bindParam(':task_name', $task_name);
@@ -23,6 +24,8 @@ try {
         $stmt->bindParam(':project_id', $project_id);
         $stmt->bindParam(':task_created', $task_created);
         $stmt->bindParam(':due_date', $due_date);
+        $stmt->bindParam(':status', $status);
+        
         
 
         // Execute the statement
