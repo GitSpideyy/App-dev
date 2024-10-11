@@ -21,6 +21,19 @@ try {
         $_SESSION['userid'] = $userid_result['userid'];
     } 
 
+    // Set role sessions
+    $userRole_stmt = $conn->prepare("SELECT role_id FROM `user` WHERE username = :username");
+    $userRole_stmt->bindParam(':username', $username);
+    $userRole_stmt->execute();
+
+    if ($userRole_stmt->rowCount() > 0) {
+        $userRole_result = $userRole_stmt->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['role_id'] = $userRole_result['role_id'];
+    } 
+
+
+
+    // Set the username in the session
     $_SESSION['username'] = $username;
     
     // Prepare SQL statement to get user data including hashed password

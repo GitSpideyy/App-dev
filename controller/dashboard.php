@@ -28,8 +28,15 @@ try {
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Main Sidebar Container -->
-        <?php include '../sidebar.php'; ?>
+        <?php 
 
+if ($_SESSION['role_id'] == 1) {
+    include '../staffSideBar.php';
+    
+} else if ($_SESSION['role_id'] == 2) {
+    include '../sidebar.php';
+} 
+ ?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <div class="content-header">
@@ -44,7 +51,16 @@ try {
             <!-- Main content goes here -->
              
            
-            <?php include '../controller/staffView.php'; ?>
+            <?php 
+
+            if ($_SESSION['role_id'] == 1) {
+                include '../controller/staffView.php';
+                
+            } else if ($_SESSION['role_id'] == 2) {
+                include '../controller/managerView.php';
+            } 
+             ?>
+            
         </div>
        
         <!-- Footer -->

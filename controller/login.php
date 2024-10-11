@@ -22,7 +22,7 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg" style="font-size: 28px; color: #000000;">Task Management System</p>
+        <p class="login-box-msg" style="font-size: 28px; color: #000000;">Project Management System</p>
         <p class="login-box-msg" style="color: #666666; font-size: 15px;">sign in to start your session</p>
 
         <form action="../../index3.html" method="post">
