@@ -210,7 +210,7 @@ include "../authCheck.php";?>
 
             $.ajax({
                 type: "POST",
-                url: '../action/personListUpdate_action.php',
+                url: '../action/staffListUpdate_action.php',
                 data: {
                     staff_id: staff_id,
                     firstname: firstname,
@@ -225,7 +225,7 @@ include "../authCheck.php";?>
                     if (obj.response == 'success') {
                         toastr.success(obj.message);
                         window.setTimeout(function () {
-                            window.location.href = "../controller/personList.php";
+                            window.location.href = "../controller/staffList.php";
                         }, 1000);
                     } else {
                         toastr.error(obj.message);
