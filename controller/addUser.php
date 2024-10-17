@@ -32,7 +32,7 @@ session_start();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Add a Project</h1>
+                            <h1 class="m-0">Add a User</h1>
                         </div>
                         <div class="col-sm-6">
                             <!-- Optional right column content -->
@@ -51,7 +51,7 @@ session_start();
                             <!-- general form elements -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Project Information</h3>
+                                    <h3 class="card-title">User Information</h3>
                                 </div>
                                 <form id="login">
                     <div class="input-group mb-3">

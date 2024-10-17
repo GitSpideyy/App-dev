@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
     session_start();
@@ -148,6 +150,7 @@ session_start();
             var project_created = document.getElementById("project_created").value;
             var start_date = document.getElementById("start_date").value;
             var end_date = document.getElementById("end_date").value;
+            var user_id = "<?php echo isset($_SESSION['userid']) ? $_SESSION['userid'] : ''; ?>"; // Get the session user ID
 
             $.ajax({
                 type: "POST",
@@ -157,6 +160,7 @@ session_start();
                     project_created: project_created,
                     start_date: start_date,
                     end_date: end_date,
+                    user_id: user_id
                 },
                 success: function (data) {
                     const obj = JSON.parse(data);

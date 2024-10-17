@@ -109,7 +109,17 @@ if ($result) {
 
                         </p>
                     </a>
-
+                    <li class="nav-item menu-open">
+                    <a href="../controller/staffAccountModify.php" class="nav-link active">
+                        <!-- person Menu -->
+                        <i class="nav-icon fas fa-user-tie"></i>
+                        <p>
+                            Edit Account 
+                        
+                        </p>
+                    </a>
+                   
+                </li>
                 </li>
                 
                 <!-- logout Menu -->    
