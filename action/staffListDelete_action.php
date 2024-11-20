@@ -16,10 +16,10 @@ try {
         // Execute the statement
         if ($stmt->execute()) {
             // Output success response
-            echo json_encode(array("response" => "success", "message" => "Record Deleted"));
+            echo json_encode(array("response" => "success", "message" => "Staff Deleted"));
         } else {
             // Output failure response
-            echo json_encode(array("response" => "error", "message" => "Deletion Failed"));
+            echo json_encode(array("response" => "error", "message" => "Staff Deletion Failed"));
         }
     } else {
         // Output missing parameter response

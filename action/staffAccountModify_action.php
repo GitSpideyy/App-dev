@@ -40,9 +40,9 @@ try {
 
             // Execute the statement
             if ($stmt->execute()) {
-                echo json_encode(["response" => "success", "message" => "Task Updated Successfully"]);
+                echo json_encode(["response" => "success", "message" => "User Updated Successfully"]);
             } else {
-                echo json_encode(["response" => "error", "message" => "Task Update Failed"]);
+                echo json_encode(["response" => "error", "message" => "User Update Failed"]);
             }
         } else {
             echo json_encode(["response" => "error", "message" => "User not found"]);

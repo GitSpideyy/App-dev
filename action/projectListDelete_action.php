@@ -16,7 +16,7 @@ try {
         // Execute the statement
         if ($stmt->execute()) {
             // Output success response
-            echo json_encode(array("response" => "success", "message" => "Record Deleted"));
+            echo json_encode(array("response" => "success", "message" => "Project Deleted"));
         } else {
             // Output failure response
             echo json_encode(array("response" => "error", "message" => "Deletion Failed"));

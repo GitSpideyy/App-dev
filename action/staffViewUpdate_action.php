@@ -23,7 +23,7 @@ try {
         if ($stmt->execute()) {
             echo json_encode(array("response" => "success", "message" => "Task Updated Successfully"));
         } else {
-            echo json_encode(array("response" => "error", "message" => "Project Update Failed"));
+            echo json_encode(array("response" => "error", "message" => "Task Update Failed"));
         }
 
     } else {

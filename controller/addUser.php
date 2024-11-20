@@ -44,60 +44,59 @@ session_start();
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- left column -->
-                        <div class="col-md-6">
-                            <!-- general form elements -->
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">User Information</h3>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">User Information</h3>
+                    </div>
+                    <form id="login">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Enter Staff ID" id="staff_id" name="staff_id">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user-tie"></span>
                                 </div>
-                                <form id="login">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Enter Staff ID" id="staff_id" name="staff_id">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user-tie"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username" id="username" name="username">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" id="password"
-                            name="password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                   
-                    <div class="row">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-primary btn-block"
-                                onclick="SaveRecord()">Submit</button>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-primary btn-block" onclick="SaveRecord()">Submit</button>
+                            </div>
                         </div>
-                        
-                    </div>
 
-                </form>
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!--/.col (right) -->
-                    </div>
-                    <!-- /.row -->
+                        
+
+                    </form>
                 </div>
-                <!-- /.container-fluid -->
-            </section>
+                <!-- /.card -->
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
             <!-- /.content -->
 
         </div>

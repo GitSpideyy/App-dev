@@ -26,9 +26,9 @@ try {
 
         // Execute the statement
         if ($stmt->execute()) {
-            echo json_encode(array("response" => "success", "message" => "Person Created"));
+            echo json_encode(array("response" => "success", "message" => "Staff Added"));
         } else {
-            echo json_encode(array("response" => "error", "message" => "Person creation failed"));
+            echo json_encode(array("response" => "error", "message" => "Staff creation failed"));
         }
 
     } else {

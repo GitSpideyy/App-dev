@@ -31,9 +31,9 @@ try {
 
         // Execute the statement
         if ($stmt->execute()) {
-            echo json_encode(array("response" => "success", "message" => "Account Modified"));
+            echo json_encode(array("response" => "success", "message" => "Staff Account Modified"));
         } else {
-            echo json_encode(array("response" => "error", "message" => "Account Modification failed"));
+            echo json_encode(array("response" => "error", "message" => "Staff Account Modification failed"));
         }
 
     } else {

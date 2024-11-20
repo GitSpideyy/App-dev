@@ -50,7 +50,7 @@ CREATE TABLE `role`  (
 -- ----------------------------
 INSERT INTO `role` VALUES (1, 'staff');
 INSERT INTO `role` VALUES (2, 'manager');
-INSERT INTO `role` VALUES (3, 'admin');
+
 
 -- ----------------------------
 -- Table structure for staff

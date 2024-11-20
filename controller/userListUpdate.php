@@ -99,7 +99,7 @@ try {
                                 <div class="container">
                                     <form id="updateForm" onsubmit="return validateForm()">
                                         <div class="form-group">
-                                            <label for="userid">Person ID</label>
+                                            <label for="userid">User ID</label>
                                             <input type="text" class="form-control" id="userid"
                                                 value="<?php echo htmlspecialchars($user['userid']); ?>" readonly>
                                         </div>

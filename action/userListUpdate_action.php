@@ -12,6 +12,8 @@ try {
         $password = $_POST["password"];
         $staff_id = $_POST["staff_id"];
         $role_id = $_POST["role_id"];
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
        
 
         // Prepare the SQL statement
@@ -20,16 +22,16 @@ try {
         // Bind parameters
         $stmt->bindParam(':userid', $userid);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $hashedPassword);
         $stmt->bindParam(':staff_id', $staff_id);
         $stmt->bindParam(':role_id', $role_id);
       
 
         // Execute the statement
         if ($stmt->execute()) {
-            echo json_encode(["response" => "success", "message" => "task Updated Successfully"]);
+            echo json_encode(["response" => "success", "message" => "User Updated Successfully"]);
         } else {
-            echo json_encode(["response" => "error", "message" => "task Update Failed"]);
+            echo json_encode(["response" => "error", "message" => "User Update Failed"]);
         }
 
     } else {

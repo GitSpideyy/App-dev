@@ -38,7 +38,7 @@ $conn = null;
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="../controller/personList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="../controller/staffList.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- Projects box -->
